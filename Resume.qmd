@@ -1,0 +1,5 @@
+---
+title: "Brian Gao's Resume"
+---
+
+{{< pdf files/BrianGao_Resume2024.pdf width=100% height=800 >}}

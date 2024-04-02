@@ -1,0 +1,22 @@
+project:
+  type: website
+  output-dir: docs
+  
+website:
+  title: "Brian's Website"
+  navbar:
+    left:
+      - href: index.qmd
+        text: about
+      - href: Resume.qmd
+        text: Resume
+      - href: projects.qmd
+        text: Projects
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
+

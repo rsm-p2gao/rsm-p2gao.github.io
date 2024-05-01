@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Brian Gao">
-<meta name="dcterms.date" content="2024-04-16">
+<meta name="dcterms.date" content="2024-04-30">
 
 <title>Brian’s Website - A Replication of Karlan and List (2007)</title>
 <style>
@@ -197,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 16, 2024</p>
+      <p class="date">April 30, 2024</p>
     </div>
   </div>
   
@@ -216,7 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<div id="2bd9466c" class="cell" data-execution_count="2">
+<div id="5b39c7b2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_stata(<span class="st">'data/karlan_list_2007.dta'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="description" class="level3">
@@ -459,7 +459,7 @@ Variable Definitions
 <h3 class="anchored" data-anchor-id="balance-test">Balance Test</h3>
 <p>As an ad hoc test of the randomization mechanism, I provide a series of tests that compare aspects of the treatment and control groups to assess whether they are statistically significantly different from one another.</p>
 <p><strong>Number of months since last donation (mrm2)</strong></p>
-<div id="4aa9da71" class="cell" data-execution_count="3">
+<div id="29f4329d" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting the data for treatment and control groups</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>treatment_group <span class="op">=</span> data[data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'mrm2'</span>]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>control_group <span class="op">=</span> data[data[<span class="st">'control'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'mrm2'</span>]</span>
@@ -527,7 +527,7 @@ Nr obs: 50,082</code></pre>
 <section id="charitable-contribution-made" class="level3">
 <h3 class="anchored" data-anchor-id="charitable-contribution-made">Charitable Contribution Made</h3>
 <p>First, I analyze whether matched donations lead to an increased response rate of making a donation.</p>
-<div id="53997bbb" class="cell" data-execution_count="6">
+<div id="47c2ed8b" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -536,7 +536,7 @@ Nr obs: 50,082</code></pre>
 </div>
 </div>
 </div>
-<div id="11b77f4b" class="cell" data-execution_count="7">
+<div id="a13f4172" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-stdout">
 <pre><code>t_statistic_manual: 3.2094621908279835 p-value: 0.0013309823450914173
 Linear regression (OLS)
@@ -558,13 +558,13 @@ Nr obs: 50,083</code></pre>
 </div>
 </div>
 <p>The statistical tests performed — both the t-test and the bivariate linear regression — suggest that there is a statistically significant difference between the treatment and control groups regarding making a donation. The small p-values in both tests (t-test and regression) tell us that the observed differences in donation rates between the control and treatment groups are highly unlikely to have occurred by chance (p &lt; 0.05). This provides strong evidence in favor of the treatment’s impact on increasing donation rates. The results indicate that even small incentives or changes in how donations are solicited (like matching donations) can positively affect donor behavior. This aligns with behavioral economic theories suggesting that people are more likely to engage in pro-social behavior (like donating to charity) if they perceive their contribution as being more impactful or if they receive some form of positive reinforcement or matching contribution.</p>
-<div id="4653e58c" class="cell" data-execution_count="8">
+<div id="be6a3100" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-stdout">
 <pre><code>Optimization terminated successfully.
          Current function value: 0.100443
          Iterations 7</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="104">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Probit Regression Results</caption>
@@ -589,13 +589,13 @@ Nr obs: 50,083</code></pre>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Date:</td>
-<td>Tue, 16 Apr 2024</td>
+<td>Tue, 30 Apr 2024</td>
 <td data-quarto-table-cell-role="th">Pseudo R-squ.:</td>
 <td>0.0009783</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Time:</td>
-<td>11:52:12</td>
+<td>16:57:07</td>
 <td data-quarto-table-cell-role="th">Log-Likelihood:</td>
 <td>-5030.5</td>
 </tr>
@@ -652,7 +652,7 @@ Nr obs: 50,083</code></pre>
 <section id="differences-between-match-rates" class="level3">
 <h3 class="anchored" data-anchor-id="differences-between-match-rates">Differences between Match Rates</h3>
 <p>Next, I assess the effectiveness of different sizes of matched donations on the response rate.</p>
-<div id="67a46423" class="cell" data-execution_count="9">
+<div id="001c75c0" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-stdout">
 <pre><code>1:1 vs 2:1 t_statistic: -0.965048975142932  p-value: 0.33453078237183076
 1:1 vs 3:1 t_statistic: -1.0150174470156275  p-value: 0.31010856527625774
@@ -660,7 +660,7 @@ Nr obs: 50,083</code></pre>
 </div>
 </div>
 <p>My results support the “figures suggest” comment since my results also show that the ratios does not have a meaningful influence on behavior(p-value much higher than 0.05).</p>
-<div id="923b8740" class="cell" data-execution_count="10">
+<div id="f30d832d" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear regression (OLS)
 Data                 : data
@@ -683,7 +683,7 @@ Nr obs: 50,083</code></pre>
 </div>
 </div>
 <p>The regression analysis assessing the impact of different match ratios on the likelihood of making a donation reveals that higher match ratios (2:1 and 3:1) significantly increase the probability of donating by approximately 0.5 percentage points compared to the baseline, a statistically significant finding with p-values of 0.006 and 0.005, respectively. Although the 1:1 match ratio also shows an increase in donation probability (by 0.3 percentage points), this effect is only marginally significant (p-value of 0.097).</p>
-<div id="bab81491" class="cell" data-execution_count="11">
+<div id="3b24352f" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-stdout">
 <pre><code>direct_1:1 vs 2:1: 0.0019 direct_2:1 vs 3:1: 0.0001
 coef_1:1 vs 2:1: 0.002 coef_2:1 vs 3:1: 0.0</code></pre>
@@ -696,7 +696,7 @@ coef_1:1 vs 2:1: 0.002 coef_2:1 vs 3:1: 0.0</code></pre>
 <p>In this subsection, I analyze the effect of the size of matched donation on the size of the charitable contribution.</p>
 <p>The t-test indicates a relatively weak statistically significant difference in donation amounts between the treatment and control groups (p-value=0.055). By performing these analyses, we learn whether the treatment effectively increases donation amounts and quantifies the increase. This helps in understanding the financial impact of the treatment and can guide future decisions regarding the use of such treatments to boost donations.</p>
 <p><strong>What happens if we limit the data to just people who made a donation and repeat the previous analysis?</strong></p>
-<div id="248d1ed5" class="cell" data-execution_count="13">
+<div id="b9bf1fce" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear regression (OLS)
 Data                 : donors_data
@@ -719,7 +719,7 @@ Nr obs: 1,034</code></pre>
 <p>On average, individuals in the control group (or baseline category, assuming treatment = 0) donate $45.54. This is significantly different from zero (p &lt; .001), suggesting a high confidence in this average donation amount among the control group donors.</p>
 <p>Being in the treatment group is associated with a decrease in the donation amount by $1.668 compared to the control group, although this effect is not statistically significant (p = 0.561). This implies that there is no strong evidence to suggest that treatment status influences the donation amount among those who chose to donate.</p>
 <p>If the treatment was randomly assigned among participants, then the coefficient can be interpreted causally as the effect of the treatment on donation amounts among donors. This causal interpretation is valid under the assumption of random assignment.</p>
-<div id="60efe8e2" class="cell" data-execution_count="14">
+<div id="0a904394" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -737,11 +737,11 @@ Nr obs: 1,034</code></pre>
 <p>Further suppose that the true distribution of respondents who do get a charitable donation match of any size is Bernoulli with probability p=0.022 that a donation is made.</p>
 <section id="law-of-large-numbers" class="level3">
 <h3 class="anchored" data-anchor-id="law-of-large-numbers">Law of Large Numbers</h3>
-<div id="1ebcf187" class="cell" data-execution_count="15">
+<div id="f61f0419" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="hw1_questions_files/figure-html/cell-16-output-1.png" width="820" height="449" class="figure-img"></p>
+<p><img src="hw1_questions_files/figure-html/cell-16-output-1.png" width="829" height="449" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -749,16 +749,34 @@ Nr obs: 1,034</code></pre>
 </section>
 <section id="central-limit-theorem" class="level3">
 <h3 class="anchored" data-anchor-id="central-limit-theorem">Central Limit Theorem</h3>
-<div id="3461b5e5" class="cell" data-execution_count="16">
+<div id="e3af7670" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="hw1_questions_files/figure-html/cell-17-output-1.png" width="1141" height="950" class="figure-img"></p>
+<p><img src="hw1_questions_files/figure-html/cell-17-output-1.png" width="1142" height="950" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>These histograms will visually demonstrate the convergence property described by the Central Limit Theorem: as the sample size increases, the distribution of the sample mean (of differences, in this case) will approximate a normal distribution more closely, centering around the true mean difference (0.004) with decreasing variance. If zero is frequently not in the middle as sample sizes increase, it supports the hypothesis that the treatment does indeed have a real, positive effect on the likelihood of donations.</p>
+<div id="c09e0136" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Names'</span>: [<span class="st">'Alan'</span>, <span class="st">'Bob'</span>, <span class="st">'Charles'</span>],</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Ages'</span>: [<span class="dv">22</span>, <span class="dv">33</span>, <span class="dv">44</span>]</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the DataFrame with an index</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data, index<span class="op">=</span>[<span class="st">'Data1'</span>, <span class="st">'Data2'</span>, <span class="st">'Data3'</span>])</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         Names  Ages
+Data1     Alan    22
+Data2      Bob    33
+Data3  Charles    44</code></pre>
+</div>
+</div>
 
 
 </section>

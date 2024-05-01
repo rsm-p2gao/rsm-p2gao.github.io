@@ -599,3 +599,15 @@ plt.show()
 
 These histograms will visually demonstrate the convergence property described by the Central Limit Theorem: as the sample size increases, the distribution of the sample mean (of differences, in this case) will approximate a normal distribution more closely, centering around the true mean difference (0.004) with decreasing variance. If zero is frequently not in the middle as sample sizes increase, it supports the hypothesis that the treatment does indeed have a real, positive effect on the likelihood of donations.
 
+```{python}
+import pandas as pd
+data = {
+    'Names': ['Alan', 'Bob', 'Charles'],
+    'Ages': [22, 33, 44]
+}
+
+# Create the DataFrame with an index
+df = pd.DataFrame(data, index=['Data1', 'Data2', 'Data3'])
+
+print(df)
+```

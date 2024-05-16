@@ -238,11 +238,11 @@ window.Quarto = {
 </section>
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
-<div id="2112982e" class="cell" data-execution_count="2">
+<div id="e2bd7125" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="hw2_questions_files/figure-html/cell-3-output-1.png" width="969" height="529" class="figure-img"></p>
+<p><img src="hw2_questions_files/figure-html/cell-3-output-1.png" width="965" height="523" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -253,16 +253,16 @@ window.Quarto = {
 <li><p>Both distributions appear right-skewed, indicating that a majority of both customers and non-customers have a lower number of patents, with fewer entities holding a higher number of patents.</p></li>
 <li><p>There is some overlap between the two distributions, but it is visible that customers tend to have slightly more patents on average.</p></li>
 </ul>
-<div id="a9a42368" class="cell" data-execution_count="3">
+<div id="a44fb822" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="hw2_questions_files/figure-html/cell-4-output-1.png" width="597" height="455" class="figure-img"></p>
+<p><img src="hw2_questions_files/figure-html/cell-4-output-1.png" width="593" height="449" class="figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/d6/rkl47jp12n963654hbtmzlkh0000gn/T/ipykernel_24452/2034835876.py:9: FutureWarning: 
+<pre><code>/var/folders/d6/rkl47jp12n963654hbtmzlkh0000gn/T/ipykernel_26689/2034835876.py:9: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
@@ -271,7 +271,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="hw2_questions_files/figure-html/cell-4-output-3.png" width="663" height="529" class="figure-img"></p>
+<p><img src="hw2_questions_files/figure-html/cell-4-output-3.png" width="659" height="523" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -286,7 +286,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 <ul>
 <li>The log-likelihood for <span class="math inline">\(Y \sim \text{Poisson}(\lambda)\)</span> is equal to <span class="math inline">\(\sum_{i=1}^n \left(-\lambda + Y_i \log \lambda - \log Y_i! \right)\)</span></li>
 </ul>
-<div id="22e3fc5a" class="cell" data-execution_count="4">
+<div id="67b7da50" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -322,7 +322,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="hw2_questions_files/figure-html/cell-5-output-1.png" width="845" height="529" class="figure-img"></p>
+<p><img src="hw2_questions_files/figure-html/cell-5-output-1.png" width="844" height="523" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -335,7 +335,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 <h3 class="anchored" data-anchor-id="estimation-of-poisson-regression-model">Estimation of Poisson Regression Model</h3>
 <p>Next, we extend our simple Poisson model to a Poisson Regression Model such that <span class="math inline">\(Y_i = \text{Poisson}(\lambda_i)\)</span> where <span class="math inline">\(\lambda_i = \exp(X_i'\beta)\)</span>. The interpretation is that the success rate of patent awards is not constant across all firms (<span class="math inline">\(\lambda\)</span>) but rather is a function of firm characteristics <span class="math inline">\(X_i\)</span>. Specifically, we will use the covariates age, age squared, region, and whether the firm is a customer of Blueprinty.</p>
 <p><strong>Using sm.GLM</strong></p>
-<div id="7aae671d" class="cell" data-execution_count="5">
+<div id="48ec9f15" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder</span>
@@ -368,7 +368,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 </details>
 </div>
 <p><strong>Compute Manually</strong></p>
-<div id="7460fb58" class="cell" data-execution_count="6">
+<div id="b7bdf806" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
@@ -443,7 +443,7 @@ Variable Definitions
 </div>
 </div>
 <p><strong>Preparing the Data</strong></p>
-<div id="6ee4ddd4" class="cell" data-execution_count="7">
+<div id="4bf3e3ed" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>airbnb_data <span class="op">=</span> pd.read_csv(<span class="st">'data/airbnb.csv'</span>)</span>
@@ -469,7 +469,7 @@ Variable Definitions
 </details>
 </div>
 <p><strong>Plotting Number of Reviews</strong></p>
-<div id="bfbcca69" class="cell" data-execution_count="8">
+<div id="962627aa" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -498,7 +498,7 @@ Variable Definitions
 <li>We see that the plot for number of reviews is heavily right skewed, indicating most of the listings have only a few reviews and listings with high number of reviews are on the more extreme side of this dataset.</li>
 </ul>
 <p><strong>Building model</strong></p>
-<div id="2b2a7125" class="cell" data-execution_count="9">
+<div id="090af4b0" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>

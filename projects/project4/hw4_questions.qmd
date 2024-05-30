@@ -1,0 +1,197 @@
+---
+title: "Key Drivers Analysis"
+author: "Brian Gao"
+date: May 29, 2024
+---
+
+
+This post implements a few measure of variable importance, interpreted as a key drivers analysis, for certain aspects of a payment card on customer satisfaction with that payment card.
+
+::: {.content-hidden when-format="html"}
+_todo: replicate the table on slide 19 of the session 4 slides. This involves calculating pearson correlations, standardized regression coefficients, "usefulness", Shapley values for a linear regression, Johnson's relative weights, and the mean decrease in the gini coefficient from a random forest. You may use packages built into R or Python._
+
+
+_If you want a challenge, either (1) implement one or more of the measures yourself. "Usefulness" is rather easy to program up. Shapley values for linear regression are a bit more work. Or (2) add additional measures to the table such as the importance scores from XGBoost._
+:::
+
+### Data
+```{python}
+#| code-fold: true
+import pandas as pd
+# Load the dataset
+file_path = 'data/data_for_drivers_analysis.csv'
+data = pd.read_csv(file_path)
+# Display the first few rows of the dataset to understand its structure
+data.head()
+```
+
+### Pearson Correlations
+```{python}
+#| code-fold: true
+from sklearn.ensemble import RandomForestRegressor
+import numpy as np
+#| code-fold: true
+# List of perception columns
+perception_columns = ['trust', 'build', 'differs', 'easy', 'appealing', 'rewarding', 'popular', 'service', 'impact']
+
+# Compute Pearson correlations
+pearson_corr = data[perception_columns].corrwith(data['satisfaction']) * 100
+
+pearson_corr_df = pd.DataFrame({'Perception': perception_columns, 'Pearson Correlations': pearson_corr.values})
+
+pearson_corr_df
+
+```
+
+### Polychoric Correlations
+```{python}
+#| code-fold: true
+from scipy.stats import spearmanr
+
+# Calculate Spearman Correlations as an approximation for Polychoric Correlations
+spearman_correlations, _ = spearmanr(data[['satisfaction', 'trust', 'build', 'differs', 'easy', 'appealing', 'rewarding', 'popular', 'service', 'impact']])
+
+# Extract the correlation values between satisfaction and each perception metric
+polychoric_correlations = spearman_correlations[0, 1:] * 100
+
+polychoric_correlations_df = pd.DataFrame({'Perception': perception_columns, 'Polychoric Correlations': polychoric_correlations})
+polychoric_correlations_df
+```
+
+**Pearson Correlations** and **Polychoric Correlations** indicate the linear and monotonic relationships between each perception and customer satisfaction, respectively. High values suggest stronger relationships.
+
+* trust, service, and impact have the highest correlations, suggesting these factors are strongly associated with customer satisfaction.
+
+* popular has the lowest correlation, indicating it has a weaker relationship with satisfaction.
+
+### Standardized Multiple Regression Coefficients
+```{python}
+#| code-fold: true
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import StandardScaler
+
+# Standardize the data
+scaler = StandardScaler()
+X = scaler.fit_transform(data[perception_columns])
+y = scaler.fit_transform(data[['satisfaction']])
+
+# Fit multiple regression model
+reg = LinearRegression().fit(X, y)
+
+# Get standardized coefficients
+standardized_coefficients = reg.coef_.flatten() * 100
+
+standardized_coeff_df = pd.DataFrame({'Perception': perception_columns, 'Standardized Multiple Regression Coefficients': standardized_coefficients})
+
+standardized_coeff_df
+
+```
+
+**Standardized Multiple Regression Coefficients** show the direct impact of each perception on customer satisfaction when all other factors are held constant.
+
+* impact and trust have the highest standardized coefficients, suggesting they are the most influential factors.
+
+* rewarding has the lowest coefficient, indicating it has the least direct influence.
+
+### LMG / Shapley Values
+```{python}
+#| code-fold: true
+from sklearn.inspection import permutation_importance
+
+# Fit the Random Forest model
+rf = RandomForestRegressor(n_estimators=100, random_state=42)
+rf.fit(data[perception_columns], data['satisfaction'])
+
+# Calculate permutation importance
+perm_importance = permutation_importance(rf, data[perception_columns], data['satisfaction'], n_repeats=30, random_state=42)
+
+# Get the importance values
+shapley_approx = perm_importance.importances_mean * 100
+
+shapley_approx_df = pd.DataFrame({'Perception': perception_columns, 'Approximate Shapley Values': shapley_approx})
+
+shapley_approx_df
+
+
+```
+
+**Shapley Values** derived from permutation importance, represent the contribution of each perception to predicting customer satisfaction.
+
+* trust and impact again stand out, contributing significantly to the predictive power of the model.
+
+* differs and popular have lower values, indicating they contribute less to the prediction.
+
+### Johnson's relative weights
+```{python}
+#| code-fold: true
+# Fit the linear regression model again to ensure we have the correct model
+reg = LinearRegression().fit(data[perception_columns], data['satisfaction'])
+
+# Get the coefficients and the R-squared value
+coefficients = reg.coef_
+R_squared = reg.score(data[perception_columns], data['satisfaction'])
+
+# Calculate the correlation matrix of the predictors
+correlation_matrix = np.corrcoef(data[perception_columns].values.T)
+
+# Calculate the relative weights (Johnson's Epsilon)
+relative_weights = np.dot(correlation_matrix, coefficients.T) ** 2
+relative_weights = (relative_weights / np.sum(relative_weights)) * R_squared * 100
+
+# Create a DataFrame for Johnson's Epsilon
+johnsons_epsilon_df = pd.DataFrame({'Perception': perception_columns, "Johnson's Epsilon": relative_weights.flatten()})
+
+johnsons_epsilon_df
+```
+
+**Johnson's relative weights** Calculated using an algebraic approximation method, these values distribute the R-squared value across the predictors, providing an efficient approximation of their relative importance in a linear regression model.
+
+* impact and trust have the highest Johnson's Epsilon values, reinforcing their importance in explaining variability in customer satisfaction.
+
+* popular and differs have the lowest values, suggesting they are less critical in the regression model.
+
+### Mean Decrease in RF Gini Coefficient
+```{python}
+#| code-fold: true
+
+# Define perception columns
+perception_columns = ['trust', 'build', 'differs', 'easy', 'appealing', 'rewarding', 'popular', 'service', 'impact']
+
+# Fit Random Forest model
+rf = RandomForestRegressor(n_estimators=100, random_state=42)
+rf.fit(data[perception_columns], data['satisfaction'])
+
+# Get feature importances (Mean Decrease in Gini Coefficient)
+importances = rf.feature_importances_ * 100
+
+# Create a DataFrame with the importances
+importance_df = pd.DataFrame({'Perception': perception_columns, 'Mean Decrease in RF Gini Coefficient': importances})
+
+importance_df
+```
+
+**Mean Decrease in RF Gini Coefficient** from the Random Forest model indicate how important each feature is in splitting the data to improve homogeneity.
+
+* trust and impact have high importance, aligning with other metrics in showing their strong influence on satisfaction.
+
+* differs and appealing have lower importance, indicating they are less crucial for the Random Forest model.
+
+### Final Table
+```{python}
+#| code-fold: true
+# Combine all the results into a single DataFrame
+final_df = pearson_corr_df.copy()
+final_df['Polychoric Correlations'] = polychoric_correlations_df['Polychoric Correlations']
+final_df['Standardized Multiple Regression Coefficients'] = standardized_coeff_df['Standardized Multiple Regression Coefficients']
+final_df['Approximate Shapley Values'] = shapley_approx_df['Approximate Shapley Values']
+final_df["Johnson's Epsilon"] = johnsons_epsilon_df["Johnson's Epsilon"]
+final_df['Mean Decrease in RF Gini Coefficient'] = importance_df['Mean Decrease in RF Gini Coefficient']
+
+final_df
+
+```
+
+* Across multiple metrics, **trust** and **impact** consistently emerge as the most significant factors influencing customer satisfaction. This consistency across different methods (correlation, regression, Shapley values, and random forest importance) strengthens the conclusion that these perceptions are key drivers of satisfaction.
+
+* In contrast, perceptions like **popular** and **differs** are less influential, suggesting that efforts to improve customer satisfaction should prioritize enhancing trust and creating a noticeable impact in customers' lives.
+

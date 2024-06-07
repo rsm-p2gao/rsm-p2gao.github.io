@@ -1,0 +1,124 @@
+---
+title: "Segmentation Methods"
+author: "Brian Gao"
+date: June 7,2024
+---
+
+
+## K-Means
+::: {.content-hidden when-format="html"}
+_todo: write your own code to implement the k-means algorithm.  Make plots of the various steps the algorithm takes so you can "see" the algorithm working.  Test your algorithm on either the Iris or PalmerPenguins datasets.  Compare your results to the built-in `kmeans` function in R or Python._
+
+_todo: Calculate both the within-cluster-sum-of-squares and silhouette scores (you can use built-in functions to do so) and plot the results for various numbers of clusters (ie, K=2,3,...,7). How many clusters are suggested by these two metrics?_
+:::
+
+### Abstract
+This analysis demonstrates the implementation and comparison of the k-means clustering algorithm, both custom-built and using the built-in function from the scikit-learn library, on the Iris dataset. The custom k-means algorithm is implemented from scratch, and its performance is visually compared to the results obtained from the optimized scikit-learn KMeans function. The comparison shows that both methods produce similar clusters, validating the correctness of the custom implementation. 
+
+```{python}
+#| code-fold: true
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+import pandas as pd
+
+file_path = 'data/iris.csv'
+iris_data = pd.read_csv(file_path)
+
+def initialize_centroids(X, k):
+    # Randomly select k unique data points as initial centroids
+    indices = np.random.choice(X.shape[0], k, replace=False)
+    return X[indices]
+
+def assign_clusters(X, centroids):
+    # Compute the distance between each data point and the centroids
+    distances = np.linalg.norm(X[:, np.newaxis] - centroids, axis=2)
+    # Assign each data point to the nearest centroid
+    return np.argmin(distances, axis=1)
+
+def update_centroids(X, labels, k):
+    # Compute the mean of the data points in each cluster
+    new_centroids = np.array([X[labels == i].mean(axis=0) for i in range(k)])
+    return new_centroids
+
+def kmeans(X, k, max_iters=100, tol=1e-4):
+    centroids = initialize_centroids(X, k)
+    for _ in range(max_iters):
+        labels = assign_clusters(X, centroids)
+        new_centroids = update_centroids(X, labels, k)
+        # Check for convergence
+        if np.all(np.linalg.norm(new_centroids - centroids, axis=1) < tol):
+            break
+        centroids = new_centroids
+    return centroids, labels
+
+# Extract features from the iris dataset
+X = iris_data.iloc[:, :-1].values
+
+# Standardize the data
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Function to plot clusters
+def plot_clusters(X, labels, centroids, title):
+    plt.scatter(X[:, 0], X[:, 1], c=labels, s=50, cmap='viridis')
+    plt.scatter(centroids[:, 0], centroids[:, 1], s=200, c='red', marker='X')
+    plt.title(title)
+
+# Apply the custom k-means algorithm
+k = 3
+custom_centroids, custom_labels = kmeans(X_scaled, k)
+
+# Plot the results of the custom k-means algorithm
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+plot_clusters(X_scaled, custom_labels, custom_centroids, 'Custom k-means')
+
+# Apply the built-in k-means algorithm for comparison
+kmeans_model = KMeans(n_clusters=k, random_state=0)
+kmeans_model.fit(X_scaled)
+builtin_centroids = kmeans_model.cluster_centers_
+builtin_labels = kmeans_model.labels_
+
+# Plot the results of the built-in k-means algorithm
+plt.subplot(1, 2, 2)
+plot_clusters(X_scaled, builtin_labels, builtin_centroids, 'Built-in k-means')
+plt.show()
+```
+
+**This code performs the following steps:**
+
+* **Data Preprocessing:** Extracts and standardizes the features from the Iris dataset.
+
+* **Custom k-means Implementation:** Uses the custom k-means algorithm on the standardized data.
+
+* **Visualization:** Plots the clustering results of the custom and built-in k-means algorithms for comparison. ​
+
+### Analysis
+**Custom k-means:**
+
+* The custom k-means algorithm was able to identify clusters and place centroids in positions that attempt to minimize the distance within clusters.
+
+* The plot on the left shows the results of the custom implementation.
+
+**Built-in k-means:**
+
+* The built-in k-means function from scikit-learn is highly optimized and produces similar clusters and centroids.
+
+* The plot on the right shows the results of the built-in k-means function.
+
+Both implementations appear to produce similar clusters, indicating that the custom k-means algorithm is functioning correctly.
+
+::: {.content-hidden when-format="html"}
+## Latent-Class MNL
+
+_todo: Use the Yogurt dataset from HW3 to estimate a latent-class MNL model.  This model was formally introduced in the paper by Kamakura & Russell (1989), which you may want to read or reference. Compare the results to the standard (aggregate) MNL model from HW3.  What are the differences in the parameter estimates?_
+
+_todo: Fit the latent-class MNL model with 2, 3, ..., K classes. How many classes are suggested by the BIC?  The Bayesian-Schwarz Information Criterion [link](https://en.wikipedia.org/wiki/Bayesian_information_criterion) is a metric that assess the benefit of a better log likelihood at the expense of additional parameters to estimate -- akin to the adjusted R-squared for the linear regression model. Note, however, that a lower BIC indicates a better model fit, accounting for the number of parameters in the model._
+:::
+
+
+
+
+
